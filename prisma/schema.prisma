@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Worker {
+  id     Int    @id @default(autoincrement())
+  name   String
+  status Int    @default(0)
+  shard  Int    @default(0)
+
+  Shift Shift[]
+}
+
+model Workplace {
+  id     Int    @id @default(autoincrement())
+  name   String
+  status Int    @default(0)
+  shard  Int    @default(0)
+
+  shifts Shift[]
+}
+
+model Shift {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now()) @map("created_at")
+  startAt     DateTime  @map("start_at")
+  endAt       DateTime  @map("end_at")
+  workplaceId Int       @map("workplace_id")
+  workerId    Int?      @map("worker_id")
+  shard       Int       @default(0)
+  cancelledAt DateTime? @map("cancelled_at")
+
+  worker    Worker?   @relation(fields: [workerId], references: [id])
+  workplace Workplace @relation(fields: [workplaceId], references: [id])
+}

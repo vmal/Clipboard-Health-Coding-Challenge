@@ -1,0 +1,16 @@
+.DS_Store
+.env
+
+/.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+/dist
+/node_modules
+/coverage
+
+/prisma/migrations
+/prisma/dev.db*
+
+/test/ctrf
+/test/junit
